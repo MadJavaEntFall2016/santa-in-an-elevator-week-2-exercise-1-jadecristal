@@ -1,6 +1,7 @@
 package edu.madisoncollege.entjava;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -38,5 +39,28 @@ public class ListTest {
         assertTrue("List missing inserted element", myList.contains(elementToInsert));
     }
 
+    @Test
+    public void testGetSuccess() {
+        String elementToGet = "Item 1";
+
+        assertEquals("List element to get does not match", elementToGet, myList.get(0));
+    }
+
+    @Test
+    public void testRemoveSuccess() {
+        int listSize = myList.size();
+        String itemToRemove = myList.get(0);
+
+        myList.remove(0);
+        assertEquals("List remove size is incorrect", listSize - 1, myList.size());
+        assertTrue("List removed item is present", !myList.contains(itemToRemove));
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testThrowsIndexOutOfBoundsException() {
+        int listSize = myList.size();
+
+        myList.get(listSize + 1);
+    }
 
 }

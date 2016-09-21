@@ -1,5 +1,11 @@
 package edu.madisoncollege.entjava;
 
+import org.apache.log4j.Logger;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.IOException;
 
 /**
  * Created by paulawaite on 9/7/16.
@@ -37,5 +43,50 @@ package edu.madisoncollege.entjava;
 
 public class SantaInAnElevator {
 
+    private int floor;
+
+    public SantaInAnElevator() {
+        floor = 0;
+    }
+
+    public void up() {
+        floor++;
+    }
+
+    public void down() {
+        floor--;
+    }
+
+    public int getFloor() {
+        return floor;
+    }
+
+    public void giveDirections(String elevatorButtons) throws IllegalStateException {
+        for (char button : elevatorButtons.toCharArray()) {
+            if (button == '(') {
+                this.up();
+            } else if (button == ')') {
+                this.down();
+            } else if (button == '\n') {
+                break;
+            } else throw new IllegalStateException("That button isn't on Santa's instructions!");
+        }
+    }
+
+    public String readSantaDirections(String santaDirectionsFileName) throws Exception {
+        String santaDirections;
+        try {
+            InputStream santaDirectionsStream = this.getClass().getClassLoader().getResourceAsStream(santaDirectionsFileName);
+            BufferedReader santaDirectionsReader = new BufferedReader(new InputStreamReader(santaDirectionsStream));
+
+            santaDirections = santaDirectionsReader.readLine();
+
+            santaDirectionsReader.close();
+        }
+        catch (Exception e)  {
+            throw e;
+        }
+        return santaDirections;
+    }
 
 }
